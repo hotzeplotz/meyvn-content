@@ -45,6 +45,20 @@ license, etc.)
     git commit -m 'Import of x.y.N'
     git tag -u <signing_key> -s upstream/x.y.N
 
+If using a pristine-tar branch (as for php-symfony-console), the process is
+slightly different (and possibly, this should be the way to do things in any
+case, but i have only figured this out after having tagged all the new
+releases, so i will check this on the next update): once the
+`Package-x.y.N.tgz` file is downloaded, we can import its delta against the
+previous version via `git-import-orig`:
+
+    mv Package-x.y.N.tgz ..
+    git-import-orig -u x.y.N ../Package-x.y.N.tgz
+
+(again, i need to check this on next update, but i believe that all it takes is
+actually a single `git-import-orig --uscan`, which should take care of pretty
+much everything up to now).
+
 Now the Debian fun starts:
 
     git checkout debian-sid
